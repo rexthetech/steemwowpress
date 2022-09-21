@@ -149,20 +149,20 @@ class Steempress_sp_Admin {
         // All checkboxes inputs
         $valid = array();
         $valid['reward'] = (isset($_POST['steempress_sp']['reward']) && !empty($_POST['steempress_sp']['reward'] ) && ($_POST['steempress_sp']['reward'] == "50" || $_POST['steempress_sp']['reward'] == "100")) ? $_POST['steempress_sp']['reward'] : "50";
-        $valid['posting-key'] = (isset($_POST['steempress_sp']['posting-key']) && !empty($_POST['steempress_sp']['posting-key'])) ? htmlspecialchars($_POST['steempress_sp']['posting-key'], ENT_QUOTES) : "";
-        $valid['tags'] = (isset($_POST['steempress_sp']['tags']) && !empty($_POST['steempress_sp']['tags'])) ? htmlspecialchars($_POST['steempress_sp']['tags'], ENT_QUOTES) : "";
-        $valid['username'] = (isset($_POST['steempress_sp']['username']) && !empty($_POST['steempress_sp']['username'])) ? htmlspecialchars($_POST['steempress_sp']['username'], ENT_QUOTES) : "";
+        $valid['posting-key'] = (isset($_POST['steempress_sp']['posting-key']) && !empty($_POST['steempress_sp']['posting-key'])) ? sanitize_text_field($_POST['steempress_sp']['posting-key']) : "";
+        $valid['tags'] = (isset($_POST['steempress_sp']['tags']) && !empty($_POST['steempress_sp']['tags'])) ? sanitize_text_field($_POST['steempress_sp']['tags']) : "";
+        $valid['username'] = (isset($_POST['steempress_sp']['username']) && !empty($_POST['steempress_sp']['username'])) ? sanitize_user($_POST['steempress_sp']['username']) : "";
         $valid['footer-display'] = ((isset($_POST['steempress_sp']['footer-display']) && !empty($_POST['steempress_sp']['footer-display'])) && $_POST['steempress_sp']['footer-display'] == 'on') ? 'on' : "off";
         $valid['footer-top'] = ((isset($_POST['steempress_sp']['footer-top']) && !empty($_POST['steempress_sp']['footer-top'])) && $_POST['steempress_sp']['footer-top'] == 'on') ? 'on' : "off";
         $valid['vote'] = ((isset($_POST['steempress_sp']['vote']) && !empty($_POST['steempress_sp']['vote'])) && $_POST['steempress_sp']['vote'] == 'on') ? 'on' : "off";
         $valid['append'] = ((isset($_POST['steempress_sp']['append']) && !empty($_POST['steempress_sp']['append'])) && $_POST['steempress_sp']['append'] == 'on') ? 'on' : "off";
-        $valid['delay'] = ((isset($_POST['steempress_sp']['delay']) && !empty($_POST['steempress_sp']['delay']) && is_numeric($_POST['steempress_sp']['delay']) && $_POST['steempress_sp']['delay'] >= 0 && $_POST['steempress_sp']['delay'] <= 87600)) ?  htmlspecialchars($_POST['steempress_sp']['delay'], ENT_QUOTES) : "0";
+        $valid['delay'] = ((isset($_POST['steempress_sp']['delay']) && !empty($_POST['steempress_sp']['delay']) && is_numeric($_POST['steempress_sp']['delay']) && $_POST['steempress_sp']['delay'] >= 0 && $_POST['steempress_sp']['delay'] <= 87600)) ? (int) $_POST['steempress_sp']['delay'] : "0";
         $valid['featured'] = ((isset($_POST['steempress_sp']['featured']) && !empty($_POST['steempress_sp']['featured'])) && $_POST['steempress_sp']['featured'] == 'on') ? 'on' : "off";
         $valid['footer'] = (isset($_POST['steempress_sp']['footer']) && !empty($_POST['steempress_sp']['footer'])) ? $_POST['steempress_sp']['footer'] : "<br /><center><hr/><em>Posted from my blog with <a href='https://wordpress.org/plugins/steempress/'>SteemPress</a> : [%original_link%] </em><hr/></center>";
         $valid['twoway'] = ((isset($_POST['steempress_sp']['twoway']) && !empty($_POST['steempress_sp']['twoway'])) && $_POST['steempress_sp']['twoway'] == 'on') ? 'on' : "off";
         $valid['twoway-front'] = ((isset($_POST['steempress_sp']['twoway-front']) && !empty($_POST['steempress_sp']['twoway-front'])) && $_POST['steempress_sp']['twoway-front'] == 'on') ? 'on' : "off";
         $valid['update'] = ((isset($_POST['steempress_sp']['update']) && !empty($_POST['steempress_sp']['update'])) && $_POST['steempress_sp']['update'] == 'on') ? 'on' : "off";
-        $valid['wordlimit'] = ((isset($_POST['steempress_sp']['wordlimit']) && !empty($_POST['steempress_sp']['wordlimit']) && is_numeric($_POST['steempress_sp']['wordlimit']) && $_POST['steempress_sp']['wordlimit'] >= 0)) ?  htmlspecialchars($_POST['steempress_sp']['wordlimit'], ENT_QUOTES) : "0";
+        $valid['wordlimit'] = ((isset($_POST['steempress_sp']['wordlimit']) && !empty($_POST['steempress_sp']['wordlimit']) && is_numeric($_POST['steempress_sp']['wordlimit']) && $_POST['steempress_sp']['wordlimit'] >= 0)) ? (int) $_POST['steempress_sp']['wordlimit'] : "0";
 
 
         if ($valid['posting-key'] == "posting key set. Enter another one to change it")
@@ -192,35 +192,35 @@ class Steempress_sp_Admin {
         $valid = array();
         $valid['reward'] = (isset($input['reward']) && !empty($input['reward'] ) && ($input['reward'] == "50" || $input['reward'] == "100")) ? $input['reward'] : "50";
 
-        $valid['posting-key'] = (isset($input['posting-key']) && !empty($input['posting-key'])) ? htmlspecialchars($input['posting-key'], ENT_QUOTES) : "";
+        $valid['posting-key'] = (isset($input['posting-key']) && !empty($input['posting-key'])) ? sanitize_text_field($input['posting-key']) : "";
         if ($valid['posting-key'] == "posting key set. Enter another one to change it")
         {
             $valid['posting-key'] = $options['posting-key'];
         }
 
-        $valid['tags'] = (isset($input['tags']) && !empty($input['tags'])) ? htmlspecialchars($input['tags'], ENT_QUOTES) : "";
-        $valid['username'] = (isset($input['username']) && !empty($input['username'])) ? htmlspecialchars($input['username'], ENT_QUOTES) : "";
-        $valid['verification-code'] = (isset($input['verification-code']) && !empty($input['verification-code'])) ? htmlspecialchars($input['verification-code'], ENT_QUOTES) : "";
+        $valid['tags'] = (isset($input['tags']) && !empty($input['tags'])) ? sanitize_text_field($input['tags']) : "";
+        $valid['username'] = (isset($input['username']) && !empty($input['username'])) ? sanitize_user($input['username']) : "";
+        $valid['verification-code'] = (isset($input['verification-code']) && !empty($input['verification-code'])) ? sanitize_text_field($input['verification-code']) : "";
         $valid['footer-display'] = ((isset($input['footer-display']) && !empty($input['footer-display'])) && $input['footer-display'] == 'on') ? 'on' : "off";
         $valid['footer-top'] = ((isset($input['footer-top']) && !empty($input['footer-top'])) && $input['footer-top'] == 'on') ? 'on' : "off";
 
         $valid['vote'] = ((isset($input['vote']) && !empty($input['vote'])) && $input['vote'] == 'on') ? 'on' : "off";
         $valid['append'] = ((isset($input['append']) && !empty($input['append'])) && $input['append'] == 'on') ? 'on' : "off";
-        $valid['delay'] = ((isset($input['delay']) && !empty($input['delay']) && is_numeric($input['delay']) && $input['delay'] >= 0 && $input['delay'] <= 87600)) ?  htmlspecialchars($input['delay'], ENT_QUOTES) : "0";
+        $valid['delay'] = ((isset($input['delay']) && !empty($input['delay']) && is_numeric($input['delay']) && $input['delay'] >= 0 && $input['delay'] <= 87600)) ? (int) $input['delay'] : "0";
         $valid['featured'] = ((isset($input['featured']) && !empty($input['featured'])) && $input['featured'] == 'on') ? 'on' : "off";
         $valid['footer'] = (isset($input['footer']) && !empty($input['footer'])) ? $input['footer'] : "<br /><center><hr/><em>Posted from my blog with <a href='https://wordpress.org/plugins/steempress/'>SteemPress</a> : [%original_link%] </em><hr/></center>";
         $valid['twoway'] = ((isset($input['twoway']) && !empty($input['twoway'])) && $input['twoway'] == 'on') ? 'on' : "off";
         $valid['twoway-front'] = ((isset($input['twoway-front']) && !empty($input['twoway-front'])) && $input['twoway-front'] == 'on') ? 'on' : "off";
         $valid['update'] = ((isset($input['update']) && !empty($input['update'])) && $input['update'] == 'on') ? 'on' : "off";
-        $valid['wordlimit'] = ((isset($input['wordlimit']) && !empty($input['wordlimit']) && is_numeric($input['wordlimit']) && $input['wordlimit'] >= 0)) ?  htmlspecialchars($input['wordlimit'], ENT_QUOTES) : "0";
-        $valid['license-key'] = (isset($input['license-key']) && !empty($input['license-key'])) ? htmlspecialchars($input['license-key'], ENT_QUOTES) : "";
+        $valid['wordlimit'] = ((isset($input['wordlimit']) && !empty($input['wordlimit']) && is_numeric($input['wordlimit']) && $input['wordlimit'] >= 0)) ? (int) $input['wordlimit'] : "0";
+        $valid['license-key'] = (isset($input['license-key']) && !empty($input['license-key'])) ? sanitize_text_field($input['license-key']) : "";
 
         $users = get_users();
 
         for ($i = 0; $i < sizeof($users); $i++)
         {
-            $valid['posting-key'.$users[$i]->data->ID] = (isset($input['posting-key'.$users[$i]->data->ID]) && !empty($input['posting-key'.$users[$i]->data->ID])) ? htmlspecialchars($input['posting-key'.$users[$i]->data->ID], ENT_QUOTES) : "";
-            $valid['username'.$users[$i]->data->ID] = (isset($input['username'.$users[$i]->data->ID]) && !empty($input['username'.$users[$i]->data->ID])) ? htmlspecialchars($input['username'.$users[$i]->data->ID], ENT_QUOTES) : "";
+            $valid['posting-key'.$users[$i]->data->ID] = (isset($input['posting-key'.$users[$i]->data->ID]) && !empty($input['posting-key'.$users[$i]->data->ID])) ? sanitize_text_field($input['posting-key'.$users[$i]->data->ID]) : "";
+            $valid['username'.$users[$i]->data->ID] = (isset($input['username'.$users[$i]->data->ID]) && !empty($input['username'.$users[$i]->data->ID])) ? sanitize_text_field($input['username'.$users[$i]->data->ID]) : "";
         }
 
         $categories = get_categories(array('hide_empty' => FALSE));
@@ -337,8 +337,8 @@ class Steempress_sp_Admin {
         // Post to the api who will publish it on the steem blockchain.
         $result = wp_remote_post(steempress_sp_api_url, $data);
         if (!isset($result->errors)) {
-            update_post_meta($id,'steempress_sp_permlink', htmlspecialchars($result['body'], ENT_QUOTES));
-            update_post_meta($id,'steempress_sp_author', htmlspecialchars($username, ENT_QUOTES));            
+            update_post_meta($id,'steempress_sp_permlink', sanitize_text_field($result['body']));
+            update_post_meta($id,'steempress_sp_author', sanitize_user($username));
         }
     }
 
@@ -558,8 +558,8 @@ class Steempress_sp_Admin {
         }
 
         if (array_key_exists('steempress_sp_permlink', $_POST) && array_key_exists('steempress_sp_author', $_POST)) {
-            update_post_meta($post_id,'steempress_sp_permlink', htmlspecialchars($_POST['steempress_sp_permlink'], ENT_QUOTES));
-            update_post_meta($post_id,'steempress_sp_author', htmlspecialchars($_POST['steempress_sp_author'], ENT_QUOTES));            
+            update_post_meta($post_id,'steempress_sp_permlink', sanitize_text_field($_POST['steempress_sp_permlink']));
+            update_post_meta($post_id,'steempress_sp_author', sanitize_user($_POST['steempress_sp_author']));
         }
     }
 
@@ -628,8 +628,8 @@ class Steempress_sp_Admin {
                 $author = $meta_author;
 
             // Sanitize
-            $author = htmlspecialchars($author, ENT_QUOTES);
-            $permlink = htmlspecialchars($permlink, ENT_QUOTES);
+            $author = sanitize_user($author);
+            $permlink = sanitize_text_field($permlink);
                 
             $body .= "<p>These options are only for advanced users regarding steem integration</p>
               <label for=\"steempress_sp_author\">Author : </label><br>
@@ -653,7 +653,7 @@ class Steempress_sp_Admin {
 
         if ($options['verification-code'] !== "")
         {
-            echo '<meta name="steempress_sp_verification" content="'.htmlspecialchars($options['verification-code'], ENT_QUOTES).'" />';
+            echo '<meta name="steempress_sp_verification" content="'.sanitize_text_field($options['verification-code']).'" />';
         }
     }
 
