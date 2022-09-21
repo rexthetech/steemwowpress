@@ -337,8 +337,8 @@ class Steempress_sp_Admin {
         // Post to the api who will publish it on the steem blockchain.
         $result = wp_remote_post(steempress_sp_api_url, $data);
         if (!isset($result->errors)) {
-            update_post_meta($id,'steempress_sp_permlink',$result['body']);
-            update_post_meta($id,'steempress_sp_author',$username);
+            update_post_meta($id,'steempress_sp_permlink', htmlspecialchars($result['body'], ENT_QUOTES));
+            update_post_meta($id,'steempress_sp_author', htmlspecialchars($username, ENT_QUOTES));            
         }
     }
 
@@ -439,8 +439,6 @@ class Steempress_sp_Admin {
 
     public function steempress_sp_post($new_status, $old_status, $post)
     {
-
-
         // If post is empty/ doesn't have the hidden_mm attribute this means that we are using gutenberg
         if ($_POST == [] || !isset($_POST['hidden_mm'])) {
             return;
@@ -450,8 +448,6 @@ class Steempress_sp_Admin {
         if ($new_status == 'publish' &&  $old_status != 'publish' && $post->post_type == 'post') {
             if (!isset($_POST['Steempress_sp_steem_publish']) && isset($_POST['Steempress_sp_steem_do_not_publish']) )
                 return;
-
-
 
             $this->Steempress_sp_publish($post->ID);
 
@@ -562,8 +558,8 @@ class Steempress_sp_Admin {
         }
 
         if (array_key_exists('steempress_sp_permlink', $_POST) && array_key_exists('steempress_sp_author', $_POST)) {
-            update_post_meta($post_id,'steempress_sp_permlink',$_POST['steempress_sp_permlink']);
-            update_post_meta($post_id,'steempress_sp_author',$_POST['steempress_sp_author']);
+            update_post_meta($post_id,'steempress_sp_permlink', htmlspecialchars($_POST['steempress_sp_permlink'], ENT_QUOTES));
+            update_post_meta($post_id,'steempress_sp_author', htmlspecialchars($_POST['steempress_sp_author'], ENT_QUOTES));            
         }
     }
 
@@ -631,6 +627,10 @@ class Steempress_sp_Admin {
             if ($meta_author != $author && $meta_author != "")
                 $author = $meta_author;
 
+            // Sanitize
+            $author = htmlspecialchars($author, ENT_QUOTES);
+            $permlink = htmlspecialchars($permlink, ENT_QUOTES);
+                
             $body .= "<p>These options are only for advanced users regarding steem integration</p>
               <label for=\"steempress_sp_author\">Author : </label><br>
               <input type='text' name='steempress_sp_author' value='" . $author . "'/><br>
