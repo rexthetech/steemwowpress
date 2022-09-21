@@ -466,7 +466,7 @@ class Steempress_sp_Admin {
             "footer_top" =>$options['footer-top'],
             "error" => json_encode($error),
             "license" => $options['license-key'],
-        ));
+        ), "timeout" => 45);
 
         // Post to the api who will publish it on the steem blockchain.
         $result = wp_remote_post(steempress_sp_api_url, $data);
@@ -889,17 +889,17 @@ class Steempress_sp_Admin {
                     "permlink" => $permlink[0],
                     "vote"=> $options["vote"],
                     "reward" => $options['reward'],
-                ));
+                ), "timeout" => 45);
 
-                    // Post to the api who will update it on the steem blockchain.
-                    $result = wp_remote_post(steempress_sp_api_url . "/update", $data);
-                    if (!isset($result->errors)) {
-                        $data = $result['body'];
-                        if ($data == "ok")
-                            return 1;
-                        else
-                            return -1;
-                    }
+                // Post to the api who will update it on the steem blockchain.
+                $result = wp_remote_post(steempress_sp_api_url . "/update", $data);
+                if (!isset($result->errors)) {
+                    $data = $result['body'];
+                    if ($data == "ok")
+                        return 1;
+                    else
+                        return -1;
+                }
             } else
                 return -2;
         } else
